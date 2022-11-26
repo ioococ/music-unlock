@@ -5,7 +5,7 @@ name: default
 
 steps:
   - name: build
-    image: node:16.18-bullseye
+    image: node:18.12-bullseye
     commands:
       - apt-get update
       - apt-get install -y cmake jq zip
