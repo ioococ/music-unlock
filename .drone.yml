@@ -20,7 +20,7 @@ steps:
       - mv *.zip sha256sum.txt upload/
 
   - name: upload
-    image: "plugins/s3"
+    image: 'plugins/s3'
     settings:
       path_style: true
       endpoint:
@@ -31,7 +31,7 @@ steps:
         from_secret: S3_SECRET_KEY
       bucket:
         from_secret: S3_BUCKET
-      region: "auto"
-      source: "upload/*"
-      strip_prefix: "upload/"
-      target: "${DRONE_REPO}/${DRONE_BUILD_NUMBER}/"
+      region: 'auto'
+      source: 'upload/*'
+      strip_prefix: 'upload/'
+      target: '${DRONE_REPO}/${DRONE_BUILD_NUMBER}/'

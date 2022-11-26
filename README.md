@@ -44,7 +44,7 @@
 
 ### 自行构建
 
-#### JS部分
+#### JS 部分
 
 - 环境要求
   - nodejs (v16.x)
@@ -71,14 +71,15 @@
    npm run make-extension
    ```
 
-#### WASM部分
+#### WASM 部分
 
 - 环境要求
+
   - Linux
   - python3
 
-- 运行此目录下的build-wasm
+- 运行此目录下的 build-wasm
 
-   ```sh
-   ./scripts/build-wasm.sh
-   ```
+  ```sh
+  ./scripts/build-wasm.sh
+  ```

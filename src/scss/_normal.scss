@@ -1,4 +1,4 @@
-body{
+body {
   font-family: $font-family;
   font-size: $fz-main;
   -webkit-font-smoothing: antialiased;
@@ -26,13 +26,13 @@ body{
   padding-bottom: 1em;
 }
 
-audio{
+audio {
   margin-bottom: 15px; // 播放控件与表格间隔
 }
 
-a{
+a {
   color: darken($color-link, 15%);
-  &:hover{
+  &:hover {
     color: $color-link;
   }
 }

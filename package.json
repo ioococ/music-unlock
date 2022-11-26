@@ -10,10 +10,6 @@
     "url": "https://github.com/ix64/unlock-music"
   },
   "private": true,
-  "prettier": {
-    "tabWidth": 2,
-    "singleQuote": true
-  },
   "scripts": {
     "postinstall": "patch-package",
     "serve": "vite",

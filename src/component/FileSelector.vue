@@ -1,21 +1,12 @@
 <template>
-  <el-upload
-    :auto-upload="false"
-    :on-change="addFile"
-    :show-file-list="false"
-    action=""
-    drag
-    multiple
-  >
+  <el-upload :auto-upload="false" :on-change="addFile" :show-file-list="false" action="" drag multiple>
     <el-icon size="80"><UploadFilled /></el-icon>
     <div>将文件拖到此处，或 <em>点击选择</em></div>
     <template #tip>
       <div>
         仅在浏览器内对文件进行解锁，无需消耗流量
         <el-tooltip effect="dark" placement="top-start">
-          <template #content>
-            算法在源代码中已经提供，所有运算都发生在本地
-          </template>
+          <template #content> 算法在源代码中已经提供，所有运算都发生在本地 </template>
           <el-icon size="12">
             <InfoFilled />
           </el-icon>
@@ -73,16 +64,9 @@ export default {
     },
   },
   mounted() {
-    if (
-      window.Worker &&
-      window.location.protocol !== 'file:' &&
-      process.env.NODE_ENV === 'production'
-    ) {
+    if (window.Worker && window.location.protocol !== 'file:' && process.env.NODE_ENV === 'production') {
       console.log('Using Worker Pool');
-      this.queue = Pool(
-        () => spawn(new Worker('@/utils/worker.ts')),
-        navigator.hardwareConcurrency || 1
-      );
+      this.queue = Pool(() => spawn(new Worker('@/utils/worker.ts')), navigator.hardwareConcurrency || 1);
       this.parallel = true;
     } else {
       console.log('Using Queue in Main Thread');

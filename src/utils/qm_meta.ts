@@ -44,8 +44,7 @@ export async function extractQQMusicMeta(
       musicMeta.common.artist = '';
       if (!musicMeta.common.artists) {
         musicMeta.common.artist = fromGBK(musicMeta.common.artist);
-      }
-      else {
+      } else {
         musicMeta.common.artist = musicMeta.common.artists.map(fromGBK).join();
       }
       musicMeta.common.title = fromGBK(musicMeta.common.title);

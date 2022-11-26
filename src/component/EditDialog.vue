@@ -26,23 +26,11 @@ form >>> input {
 </style>
 
 <template>
-  <el-dialog
-    @close="cancel()"
-    title="音乐标签编辑"
-    v-model="internalShow"
-    class="um-edit-dialog"
-    center
-  >
+  <el-dialog @close="cancel()" title="音乐标签编辑" v-model="internalShow" class="um-edit-dialog" center>
     <el-form ref="form" status-icon :model="form" label-width="0">
       <section>
-        <el-image
-          v-show="!editPicture"
-          :src="imgFile.url || picture"
-          style="width: 100px; height: 100px"
-        >
-          <template #error class="image-slot el-image__error">
-            暂无封面
-          </template>
+        <el-image v-show="!editPicture" :src="imgFile.url || picture" style="width: 100px; height: 100px">
+          <template #error class="image-slot el-image__error"> 暂无封面 </template>
         </el-image>
         <el-upload
           v-show="editPicture"
@@ -56,12 +44,8 @@ form >>> input {
           drag
         >
           <el-icon><UploadFilled /></el-icon>
-          <div class="el-upload__text">
-            将新图片拖到此处，或<em>点击选择</em><br />以替换自动匹配的图片
-          </div>
-          <template #tip class="el-upload__tip">
-            新拖到此处的图片将覆盖原始图片
-          </template>
+          <div class="el-upload__text">将新图片拖到此处，或<em>点击选择</em><br />以替换自动匹配的图片</div>
+          <template #tip class="el-upload__tip"> 新拖到此处的图片将覆盖原始图片 </template>
         </el-upload>
 
         <i
@@ -75,26 +59,17 @@ form >>> input {
         标题:
         <span v-show="!editTitle">{{ title }}</span>
         <!-- <el-input v-show="editTitle" v-model="title"></el-input> -->
-        <i
-          :class="{ 'el-icon-edit': !editTitle, 'el-icon-check': editTitle }"
-          @click="editTitle = !editTitle"
-        ></i
+        <i :class="{ 'el-icon-edit': !editTitle, 'el-icon-check': editTitle }" @click="editTitle = !editTitle"></i
         ><br />
         艺术家:
         <span v-show="!editArtist">{{ artist }}</span>
         <!-- <el-input v-show="editArtist" v-model="artist"></el-input> -->
-        <i
-          :class="{ 'el-icon-edit': !editArtist, 'el-icon-check': editArtist }"
-          @click="editArtist = !editArtist"
-        ></i
+        <i :class="{ 'el-icon-edit': !editArtist, 'el-icon-check': editArtist }" @click="editArtist = !editArtist"></i
         ><br />
         专辑:
         <span v-show="!editAlbum">{{ album }}</span>
         <!-- <el-input v-show="editAlbum" v-model="album"></el-input> -->
-        <i
-          :class="{ 'el-icon-edit': !editAlbum, 'el-icon-check': editAlbum }"
-          @click="editAlbum = !editAlbum"
-        ></i
+        <i :class="{ 'el-icon-edit': !editAlbum, 'el-icon-check': editAlbum }" @click="editAlbum = !editAlbum"></i
         ><br />
         专辑艺术家:
         <span v-show="!editAlbumartist">{{ albumartist }}</span>
@@ -110,10 +85,7 @@ form >>> input {
         风格:
         <span v-show="!editGenre">{{ genre }}</span>
         <!-- <el-input v-show="editGenre" v-model="genre"></el-input> -->
-        <i
-          :class="{ 'el-icon-edit': !editGenre, 'el-icon-check': editGenre }"
-          @click="editGenre = !editGenre"
-        ></i
+        <i :class="{ 'el-icon-edit': !editGenre, 'el-icon-check': editGenre }" @click="editGenre = !editGenre"></i
         ><br />
 
         <p class="item-desc">

@@ -3,85 +3,83 @@
  */
 
 @media (prefers-color-scheme: dark) {
-  #app{
+  #app {
     color: $dark-text-info;
   }
-  body{
+  body {
     background-color: $dark-bg;
   }
 
   // FORM
-  .el-radio{
-    &__label{
+  .el-radio {
+    &__label {
       color: $dark-text-main;
     }
-    &__input{
+    &__input {
       color: $dark-text-info;
-      .el-radio__inner{
+      .el-radio__inner {
         border-color: $dark-border;
         background-color: $dark-btn-bg;
       }
     }
 
-    &.is-checked{
-      .el-radio__inner{
+    &.is-checked {
+      .el-radio__inner {
         background-color: $blue;
       }
-      .el-radio__label{
+      .el-radio__label {
         font-weight: bold;
       }
     }
   }
 
-  .el-checkbox.is-bordered{
+  .el-checkbox.is-bordered {
     border-color: $dark-border;
     color: $dark-text-main;
     background-color: $dark-btn-bg;
-    .el-checkbox__inner{
+    .el-checkbox__inner {
       background-color: $dark-btn-bg-highlight;
       border-color: $dark-border-highlight;
     }
-    &:hover{
+    &:hover {
       border-color: $dark-border-highlight;
-      .el-checkbox__inner{
+      .el-checkbox__inner {
         background-color: $dark-btn-bg-highlight;
         border-color: $dark-border-highlight;
       }
-      .el-checkbox__label{
+      .el-checkbox__label {
         color: $dark-text-info;
       }
     }
-    &.is-checked{
+    &.is-checked {
       background-color: $blue;
-      .el-checkbox__inner{
+      .el-checkbox__inner {
         border-color: white;
       }
-      .el-checkbox__label{
+      .el-checkbox__label {
         color: white;
         font-weight: bold;
       }
-      &:hover{
+      &:hover {
         border-color: $blue;
-        .el-checkbox__inner{
+        .el-checkbox__inner {
           background-color: white;
         }
       }
     }
   }
 
-
-
   // BUTTON
-  .el-button{
+  .el-button {
     background-color: $dark-btn-bg;
     border-color: $dark-border;
     color: $dark-text-main;
 
-    &:active{
+    &:active {
       transform: translateY(2px);
     }
 
-    &--default{
+    &--default {
       &.is-plain {
         background-color: $dark-btn-bg;
         &:hover {
@@ -101,7 +99,7 @@
       }
     }
 
-    &--success{
+    &--success {
       &.is-plain {
         background-color: $dark-btn-bg;
         &:hover {
@@ -120,11 +118,11 @@
         }
       }
     }
-    &--danger{
-      &.is-plain{
+    &--danger {
+      &.is-plain {
         border-color: $dark-border;
         background-color: $dark-btn-bg;
-        &:hover{
+        &:hover {
           background-color: $red;
           border-color: $red;
         }
@@ -142,44 +140,45 @@
   }
 
   // 文件拖放区
-  .el-upload__tip{
+  .el-upload__tip {
     color: $dark-text-info;
   }
-  .el-upload-dragger{
+  .el-upload-dragger {
     background-color: $dark-uploader-bg;
     border-color: $dark-border;
-    .el-upload__text{
+    .el-upload__text {
       color: $dark-text-info;
     }
-    &:hover{
+    &:hover {
       background: $dark-uploader-bg-highlight;
       border-color: $dark-border-highlight;
     }
   }
 
   // TABLE
-  .el-table{
+  .el-table {
     background-color: $dark-bg-td;
-    &:before{ // 去除表格末尾的横线
+    &:before {
+      // 去除表格末尾的横线
       content: none;
     }
-    &__header{
-      th{
+    &__header {
+      th {
         border-bottom-color: $dark-border !important;
       }
     }
-    th.el-table__cell{
+    th.el-table__cell {
       background-color: $dark-bg-th;
       color: $dark-text-info;
     }
-    td{
+    td {
       border-bottom-color: $dark-border !important;
     }
-    tr{
+    tr {
       background-color: $dark-bg-td;
       color: $dark-text-main;
-      &:hover{
-        td{
+      &:hover {
+        td {
           background-color: $dark-bg-th !important;
         }
       }
@@ -187,68 +186,66 @@
   }
 
   // LINKS
-  a{
+  a {
     text-decoration: none;
     color: darken($dark-color-link, 15%);
-    &:hover{
+    &:hover {
       color: $dark-color-link;
     }
   }
 
   // ALERT
-  .el-notification{
+  .el-notification {
     background-color: $dark-btn-bg-highlight;
     border-color: $dark-border;
-    &__title{
+    &__title {
       color: white;
     }
-    &__content{
+    &__content {
       color: $dark-text-info;
     }
   }
 
   // DIALOG
-  .el-dialog{
+  .el-dialog {
     background-color: $dark-dialog-bg;
-    .el-dialog__header{
-      .el-dialog__title{
+    .el-dialog__header {
+      .el-dialog__title {
         color: $dark-text-main;
       }
     }
-    .el-dialog__body{
+    .el-dialog__body {
       color: $dark-text-main;
-      .el-input{
-        .el-input__inner{
+      .el-input {
+        .el-input__inner {
           color: $dark-text-main;
           background-color: $dark-btn-bg;
         }
-        .el-input__suffix{
-          .el-input__suffix-inner{
+        .el-input__suffix {
+          .el-input__suffix-inner {
           }
         }
-        .el-input__count{
-          .el-input__count-inner{
+        .el-input__count {
+          .el-input__count-inner {
             background-color: transparent;
           }
         }
       }
     }
-    .item-desc{
+    .item-desc {
       color: $dark-text-info;
     }
   }
 
-
-
   // 自定义样式
   // 首页弹窗提示信息的 更新信息 面板
-  .update-info{
+  .update-info {
     border: 1px solid $dark-btn-bg !important;
-    .update-title{
+    .update-title {
       color: $dark-text-main;
       background-color: $dark-btn-bg !important;
     }
-    .update-content{
+    .update-content {
       color: $dark-text-info;
       padding: 10px;
     }

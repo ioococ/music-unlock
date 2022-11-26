@@ -16,10 +16,7 @@ export interface KGMDecryptionResult {
  * 如果检测并解密成功，返回解密后的 Uint8Array 数据。
  * @param  {ArrayBuffer} kgmBlob 读入的文件 Blob
  */
-export async function DecryptKgmWasm(
-  kgmBlob: ArrayBuffer,
-  ext: string
-): Promise<KGMDecryptionResult> {
+export async function DecryptKgmWasm(kgmBlob: ArrayBuffer, ext: string): Promise<KGMDecryptionResult> {
   const result: KGMDecryptionResult = {
     success: false,
     data: new Uint8Array(),

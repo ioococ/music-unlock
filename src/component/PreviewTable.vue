@@ -3,9 +3,7 @@
     <el-table-column label="封面">
       <template #default="scope">
         <el-image :src="scope.row.picture" style="width: 100px; height: 100px">
-          <template #error class="image-slot el-image__error">
-            暂无封面
-          </template>
+          <template #error class="image-slot el-image__error"> 暂无封面 </template>
         </el-image>
       </template>
     </el-table-column>
@@ -26,11 +24,7 @@
     </el-table-column>
     <el-table-column label="操作">
       <template #default="scope">
-        <el-button
-          circle
-          type="success"
-          @click="handlePlay(scope.$index, scope.row)"
-        >
+        <el-button circle type="success" @click="handlePlay(scope.$index, scope.row)">
           <el-icon size="20" style="vertical-align: middle">
             <VideoPlay />
           </el-icon>
@@ -43,11 +37,7 @@
         <el-button circle @click="handleEdit(scope.row)">
           <el-icon size="20" style="vertical-align: middle"><Edit /></el-icon>
         </el-button>
-        <el-button
-          circle
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)"
-        >
+        <el-button circle type="danger" @click="handleDelete(scope.$index, scope.row)">
           <el-icon size="20" style="vertical-align: middle">
             <Delete />
           </el-icon>

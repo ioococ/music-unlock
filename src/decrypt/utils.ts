@@ -94,7 +94,8 @@ export function GetMetaFromFile(
   const items = filename.split(separator);
   if (items.length > 1) {
     //由文件名和原metadata共同决定歌手tag(有时从文件名看有多个歌手，而metadata只有一个)
-    if (!meta.artist || meta.artist.split(split_regex).length < items[0].trim().split(split_regex).length) meta.artist = items[0].trim();
+    if (!meta.artist || meta.artist.split(split_regex).length < items[0].trim().split(split_regex).length)
+      meta.artist = items[0].trim();
     if (!meta.title) meta.title = items[1].trim();
   } else if (items.length === 1) {
     if (!meta.title) meta.title = items[0].trim();
@@ -182,11 +183,12 @@ export function RewriteMetaToMp3(audioData: Buffer, info: IMusicMeta, original: 
   // preserve original data
   const frames = original.native['ID3v2.4'] || original.native['ID3v2.3'] || original.native['ID3v2.2'] || [];
   frames.forEach((frame) => {
-    if (frame.id !== 'TPE1'
-      && frame.id !== 'TIT2'
-      && frame.id !== 'TALB'
-      && frame.id !== 'TPE2'
-      && frame.id !== 'TCON'
+    if (
+      frame.id !== 'TPE1' &&
+      frame.id !== 'TIT2' &&
+      frame.id !== 'TALB' &&
+      frame.id !== 'TPE2' &&
+      frame.id !== 'TCON'
     ) {
       try {
         writer.setFrame(frame.id, frame.value);
