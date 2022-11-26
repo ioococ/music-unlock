@@ -26,58 +26,95 @@ form >>> input {
 </style>
 
 <template>
-  <el-dialog @close="cancel()" title="音乐标签编辑" :visible="show" custom-class="um-edit-dialog" center>
+  <el-dialog
+    @close="cancel()"
+    title="音乐标签编辑"
+    v-model="internalShow"
+    class="um-edit-dialog"
+    center
+  >
     <el-form ref="form" status-icon :model="form" label-width="0">
       <section>
-        <el-image v-show="!editPicture" :src="imgFile.url || picture" style="width: 100px; height: 100px">
-          <div slot="error" class="image-slot el-image__error">暂无封面</div>
+        <el-image
+          v-show="!editPicture"
+          :src="imgFile.url || picture"
+          style="width: 100px; height: 100px"
+        >
+          <template #error class="image-slot el-image__error">
+            暂无封面
+          </template>
         </el-image>
-        <el-upload v-show="editPicture" :auto-upload="false" :on-change="addFile" :on-remove="rmvFile" :show-file-list="true" :limit="1" list-type="picture" action="" drag>
-          <i class="el-icon-upload" />
-          <div class="el-upload__text">将新图片拖到此处，或<em>点击选择</em><br />以替换自动匹配的图片</div>
-          <div slot="tip" class="el-upload__tip">
-            新拖到此处的图片将覆盖原始图片
+        <el-upload
+          v-show="editPicture"
+          :auto-upload="false"
+          :on-change="addFile"
+          :on-remove="rmvFile"
+          :show-file-list="true"
+          :limit="1"
+          list-type="picture"
+          action=""
+          drag
+        >
+          <el-icon><UploadFilled /></el-icon>
+          <div class="el-upload__text">
+            将新图片拖到此处，或<em>点击选择</em><br />以替换自动匹配的图片
           </div>
-        </el-upload> 
+          <template #tip class="el-upload__tip">
+            新拖到此处的图片将覆盖原始图片
+          </template>
+        </el-upload>
+
         <i
-          :class="{'el-icon-edit': !editPicture, 'el-icon-check': editPicture}"
+          :class="{
+            'el-icon-edit': !editPicture,
+            'el-icon-check': editPicture,
+          }"
           @click="changeCover"
-        ></i><br />
-        标题: 
-        <span v-show="!editTitle">{{title}}</span>
-        <el-input v-show="editTitle" v-model="title"></el-input>
+        ></i>
+        <br />
+        标题:
+        <span v-show="!editTitle">{{ title }}</span>
+        <!-- <el-input v-show="editTitle" v-model="title"></el-input> -->
         <i
-          :class="{'el-icon-edit': !editTitle, 'el-icon-check': editTitle}"
+          :class="{ 'el-icon-edit': !editTitle, 'el-icon-check': editTitle }"
           @click="editTitle = !editTitle"
-        ></i><br />
-        艺术家: 
-        <span v-show="!editArtist">{{artist}}</span>
-        <el-input v-show="editArtist" v-model="artist"></el-input>
+        ></i
+        ><br />
+        艺术家:
+        <span v-show="!editArtist">{{ artist }}</span>
+        <!-- <el-input v-show="editArtist" v-model="artist"></el-input> -->
         <i
-          :class="{'el-icon-edit': !editArtist, 'el-icon-check': editArtist}"
+          :class="{ 'el-icon-edit': !editArtist, 'el-icon-check': editArtist }"
           @click="editArtist = !editArtist"
-        ></i><br />
-        专辑: 
-        <span v-show="!editAlbum">{{album}}</span>
-        <el-input v-show="editAlbum" v-model="album"></el-input>
+        ></i
+        ><br />
+        专辑:
+        <span v-show="!editAlbum">{{ album }}</span>
+        <!-- <el-input v-show="editAlbum" v-model="album"></el-input> -->
         <i
-          :class="{'el-icon-edit': !editAlbum, 'el-icon-check': editAlbum}"
+          :class="{ 'el-icon-edit': !editAlbum, 'el-icon-check': editAlbum }"
           @click="editAlbum = !editAlbum"
-        ></i><br />
-        专辑艺术家: 
-        <span v-show="!editAlbumartist">{{albumartist}}</span>
-        <el-input v-show="editAlbumartist" v-model="albumartist"></el-input>
+        ></i
+        ><br />
+        专辑艺术家:
+        <span v-show="!editAlbumartist">{{ albumartist }}</span>
+        <!-- <el-input v-show="editAlbumartist" v-model="albumartist"></el-input> -->
         <i
-          :class="{'el-icon-edit': !editAlbumartist, 'el-icon-check': editAlbumartist}"
+          :class="{
+            'el-icon-edit': !editAlbumartist,
+            'el-icon-check': editAlbumartist,
+          }"
           @click="editAlbumartist = !editAlbumartist"
-        ></i><br />
-        风格: 
-        <span v-show="!editGenre">{{genre}}</span>
-        <el-input v-show="editGenre" v-model="genre"></el-input>
+        ></i
+        ><br />
+        风格:
+        <span v-show="!editGenre">{{ genre }}</span>
+        <!-- <el-input v-show="editGenre" v-model="genre"></el-input> -->
         <i
-          :class="{'el-icon-edit': !editGenre, 'el-icon-check': editGenre}"
+          :class="{ 'el-icon-edit': !editGenre, 'el-icon-check': editGenre }"
           @click="editGenre = !editGenre"
-        ></i><br />
+        ></i
+        ><br />
 
         <p class="item-desc">
           为了节省您设备的资源，请在确定前充分检查，避免反复修改。<br />
@@ -85,9 +122,11 @@ form >>> input {
         </p>
       </section>
     </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="emitConfirm()">确 定</el-button>
-    </span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="emitConfirm()">确 定</el-button>
+      </span>
+    </template>
   </el-dialog>
 </template>
 
@@ -100,17 +139,17 @@ export default {
   },
   props: {
     show: { type: Boolean, required: true },
-    picture: { type: String | undefined, required: true },
-    title: { type: String | undefined, required: true },
-    artist: { type: String | undefined, required: true },
-    album: { type: String | undefined, required: true },
-    albumartist: { type: String | undefined, required: true },
-    genre: { type: String | undefined, required: true },
+    picture: { type: String, required: true },
+    title: { type: String, required: true },
+    artist: { type: String, required: true },
+    album: { type: String, required: true },
+    albumartist: { type: String, required: true },
+    genre: { type: String, required: true },
   },
   data() {
     return {
-      form: {
-      },
+      internalShow: false,
+      form: {},
       imgFile: { tmpblob: undefined, blob: undefined, url: undefined },
       editPicture: false,
       editTitle: false,
@@ -119,6 +158,11 @@ export default {
       editAlbumartist: false,
       editGenre: false,
     };
+  },
+  watch: {
+    show(newValue, oldValue) {
+      this.internalShow = newValue;
+    },
   },
   async mounted() {
     this.refreshForm();

@@ -1,8 +1,8 @@
-import QmcCryptoModule from '@/QmcWasm/QmcWasmBundle';
 import { MergeUint8Array } from '@/utils/MergeUint8Array';
+import QmcCryptoModule from '@/QmcWasm/QmcWasmBundle';
 
 // 每次处理 2M 的数据
-const DECRYPTION_BUF_SIZE = 2 *1024 * 1024;
+const DECRYPTION_BUF_SIZE = 2 * 1024 * 1024;
 
 export interface QMCDecryptionResult {
   success: boolean;
@@ -17,8 +17,16 @@ export interface QMCDecryptionResult {
  * 如果检测并解密成功，返回解密后的 Uint8Array 数据。
  * @param  {ArrayBuffer} qmcBlob 读入的文件 Blob
  */
-export async function DecryptQmcWasm(qmcBlob: ArrayBuffer, ext: string): Promise<QMCDecryptionResult> {
-  const result: QMCDecryptionResult = { success: false, data: new Uint8Array(), songId: 0, error: '' };
+export async function DecryptQmcWasm(
+  qmcBlob: ArrayBuffer,
+  ext: string
+): Promise<QMCDecryptionResult> {
+  const result: QMCDecryptionResult = {
+    success: false,
+    data: new Uint8Array(),
+    songId: 0,
+    error: '',
+  };
 
   // 初始化模组
   let QmcCrypto: any;
@@ -47,7 +55,7 @@ export async function DecryptQmcWasm(qmcBlob: ArrayBuffer, ext: string): Promise
     return result;
   } else {
     result.songId = QmcCrypto.getSongId();
-    result.songId = result.songId == "0" ? 0 : result.songId;
+    result.songId = result.songId == '0' ? 0 : result.songId;
   }
 
   const decryptedParts = [];
@@ -59,7 +67,12 @@ export async function DecryptQmcWasm(qmcBlob: ArrayBuffer, ext: string): Promise
     // 解密一些片段
     const blockData = new Uint8Array(qmcBuf.slice(offset, offset + blockSize));
     QmcCrypto.writeArrayToMemory(blockData, pQmcBuf);
-    decryptedParts.push(QmcCrypto.HEAPU8.slice(pQmcBuf, pQmcBuf + QmcCrypto.decBlob(pQmcBuf, blockSize, offset)));
+    decryptedParts.push(
+      QmcCrypto.HEAPU8.slice(
+        pQmcBuf,
+        pQmcBuf + QmcCrypto.decBlob(pQmcBuf, blockSize, offset)
+      )
+    );
 
     offset += blockSize;
     bytesToDecrypt -= blockSize;

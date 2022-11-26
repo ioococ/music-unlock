@@ -26,8 +26,20 @@ form >>> input {
 </style>
 
 <template>
-  <el-dialog @close="cancel()" title="解密设定" :visible="show" custom-class="um-config-dialog" center>
-    <el-form ref="form" :rules="rules" status-icon :model="form" label-width="0">
+  <el-dialog
+    @close="cancel()"
+    title="解密设定"
+    v-model="internalShow"
+    class="um-config-dialog"
+    center
+  >
+    <el-form
+      ref="form"
+      :rules="rules"
+      status-icon
+      :model="form"
+      label-width="0"
+    >
       <section>
         <label>
           <span>
@@ -35,7 +47,14 @@ form >>> input {
             <Ruby caption="Unique Device Identifier">设备唯一识别码</Ruby>
           </span>
           <el-form-item prop="jooxUUID">
-            <el-input type="text" v-model="form.jooxUUID" clearable maxlength="32" show-word-limit> </el-input>
+            <el-input
+              type="text"
+              v-model="form.jooxUUID"
+              clearable
+              maxlength="32"
+              show-word-limit
+            >
+            </el-input>
           </el-form-item>
         </label>
 
@@ -43,15 +62,21 @@ form >>> input {
           下载该加密文件的 JOOX 应用所记录的设备唯一识别码。
           <br />
           参见：
-          <a href="https://github.com/unlock-music/joox-crypto/wiki/%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87-UUID">
+          <a
+            href="https://github.com/unlock-music/joox-crypto/wiki/%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87-UUID"
+          >
             获取设备 UUID · unlock-music/joox-crypto Wiki</a
           >。
         </p>
       </section>
     </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" :loading="saving" @click="emitConfirm()">确 定</el-button>
-    </span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" :loading="saving" @click="emitConfirm()">
+          确 定
+        </el-button>
+      </span>
+    </template>
   </el-dialog>
 </template>
 
@@ -86,8 +111,14 @@ export default {
       form: {
         jooxUUID: '',
       },
+      internalShow: false,
       centerDialogVisible: false,
     };
+  },
+  watch: {
+    show(newValue, oldValue) {
+      this.internalShow = newValue;
+    },
   },
   async mounted() {
     await this.resetForm();

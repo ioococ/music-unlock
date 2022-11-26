@@ -5,19 +5,35 @@
     </el-main>
     <el-footer id="app-footer">
       <el-row>
-        <a href="https://github.com/ix64/unlock-music" target="_blank">音乐解锁</a>({{ version }})
-        ：移除已购音乐的加密保护。
-        <a href="https://github.com/ix64/unlock-music/wiki/使用提示" target="_blank">使用提示</a>
+        <a href="https://github.com/ix64/unlock-music" target="_blank"
+          >音乐解锁</a
+        >({{ version }}) ：移除已购音乐的加密保护。
+        <a
+          href="https://github.com/ix64/unlock-music/wiki/使用提示"
+          target="_blank"
+          >使用提示</a
+        >
       </el-row>
       <el-row>
-        目前支持 网易云音乐(ncm), QQ音乐(qmc, mflac, mgg), 酷狗音乐(kgm), 虾米音乐(xm), 酷我音乐(.kwm)
-        <a href="https://github.com/ix64/unlock-music/blob/master/README.md" target="_blank">更多</a>。
+        目前支持 网易云音乐(ncm), QQ音乐(qmc, mflac, mgg), 酷狗音乐(kgm),
+        虾米音乐(xm), 酷我音乐(.kwm)
+        <a
+          href="https://github.com/ix64/unlock-music/blob/master/README.md"
+          target="_blank"
+          >更多</a
+        >。
       </el-row>
       <el-row>
         <!--如果进行二次开发，此行版权信息不得移除且应明显地标注于页面上-->
-        <span>Copyright &copy; 2019 - {{ new Date().getFullYear() }} MengYX</span>
+        <span
+          >Copyright &copy; 2019 - {{ new Date().getFullYear() }} MengYX</span
+        >
         音乐解锁使用
-        <a href="https://github.com/ix64/unlock-music/blob/master/LICENSE" target="_blank">MIT许可协议</a>
+        <a
+          href="https://github.com/ix64/unlock-music/blob/master/LICENSE"
+          target="_blank"
+          >MIT许可协议</a
+        >
         开放源代码
       </el-row>
     </el-footer>
@@ -25,13 +41,16 @@
 </template>
 
 <script>
+import './scss/unlock-music.scss';
+import { ElNotification } from 'element-plus';
+import { defineComponent } from 'vue';
 import FileSelector from '@/component/FileSelector';
 import PreviewTable from '@/component/PreviewTable';
 import config from '@/../package.json';
 import Home from '@/view/Home';
 import { checkUpdate } from '@/utils/api';
 
-export default {
+export default defineComponent({
   name: 'app',
   components: {
     FileSelector,
@@ -59,7 +78,8 @@ export default {
       if (
         updateInfo &&
         process.env.NODE_ENV === 'production' &&
-        (updateInfo.HttpsFound || (updateInfo.Found && window.location.protocol !== 'https:'))
+        (updateInfo.HttpsFound ||
+          (updateInfo.Found && window.location.protocol !== 'https:'))
       ) {
         this.$notify.warning({
           title: '发现更新',
@@ -69,7 +89,8 @@ export default {
           position: 'top-left',
         });
       } else {
-        this.$notify.info({
+        ElNotification({
+          type: 'info',
           title: '离线使用',
           message: `<div>
                         <p>我们使用 PWA 技术，无网络也能使用</p>
@@ -86,9 +107,5 @@ export default {
       }
     },
   },
-};
+});
 </script>
-
-<style lang="scss">
-@import 'scss/unlock-music';
-</style>

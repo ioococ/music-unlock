@@ -5,7 +5,12 @@
     <div id="app-control">
       <el-row class="mb-3">
         <span>歌曲命名格式：</span>
-        <el-radio v-for="k in FilenamePolicies" :key="k.key" v-model="filename_policy" :label="k.key">
+        <el-radio
+          v-for="k in FilenamePolicies"
+          :key="k.key"
+          v-model="filename_policy"
+          :label="k.key"
+        >
           {{ k.text }}
         </el-radio>
       </el-row>
@@ -18,44 +23,83 @@
           :album="editing_data.album"
           :albumartist="editing_data.albumartist"
           :genre="editing_data.genre"
-          @cancel="showEditDialog = false" @ok="handleEdit"></edit-dialog>
-        <config-dialog :show="showConfigDialog" @done="showConfigDialog = false"></config-dialog>
+          @cancel="showEditDialog = false"
+          @ok="handleEdit"
+        ></edit-dialog>
+        <config-dialog
+          :show="showConfigDialog"
+          @done="showConfigDialog = false"
+        ></config-dialog>
         <el-tooltip class="item" effect="dark" placement="top">
-          <div slot="content">
+          <template #content>
             <span> 部分解密方案需要设定解密参数。 </span>
-          </div>
-          <el-button icon="el-icon-s-tools" plain @click="showConfigDialog = true">解密设定</el-button>
+          </template>
+          <el-button plain @click="showConfigDialog = true">
+            <el-icon><Tools /></el-icon> 解密设定
+          </el-button>
         </el-tooltip>
-        <el-button icon="el-icon-download" plain @click="handleDownloadAll">下载全部</el-button>
-        <el-button icon="el-icon-delete" plain type="danger" @click="handleDeleteAll">清除全部</el-button>
+        <el-button plain @click="handleDownloadAll">
+          <el-icon><Download /></el-icon> 下载全部
+        </el-button>
+        <el-button plain type="danger" @click="handleDeleteAll">
+          <el-icon><Delete /></el-icon> 清除全部
+        </el-button>
 
         <el-tooltip class="item" effect="dark" placement="top-start">
-          <div slot="content">
-            <span v-if="instant_save">工作模式: {{ dir ? '写入本地文件系统' : '调用浏览器下载' }}</span>
+          <template #content>
+            <span v-if="instant_save">
+              工作模式: {{ dir ? '写入本地文件系统' : '调用浏览器下载' }}
+            </span>
             <span v-else>
               当您使用此工具进行大量文件解锁的时候，建议开启此选项。<br />
               开启后，解锁结果将不会存留于浏览器中，防止内存不足。
             </span>
-          </div>
-            <el-checkbox v-model="instant_save" type="success" border class="ml-2">立即保存</el-checkbox>
+          </template>
+          <el-checkbox
+            v-model="instant_save"
+            type="success"
+            border
+            class="ml-2"
+          >
+            立即保存
+          </el-checkbox>
         </el-tooltip>
       </el-row>
     </div>
 
     <audio :autoplay="playing_auto" :src="playing_url" controls />
 
-    <PreviewTable :policy="filename_policy" :table-data="tableData" @download="saveFile" @edit="editFile" @play="changePlaying" />
+    <PreviewTable
+      :policy="filename_policy"
+      :table-data="tableData"
+      @download="saveFile"
+      @edit="editFile"
+      @play="changePlaying"
+    />
   </div>
 </template>
 
 <script>
+import { ElNotification, ElMessage, ElMessageBox } from 'element-plus';
 import FileSelector from '@/component/FileSelector';
 import PreviewTable from '@/component/PreviewTable';
 import ConfigDialog from '@/component/ConfigDialog';
 import EditDialog from '@/component/EditDialog';
 
-import { DownloadBlobMusic, FilenamePolicy, FilenamePolicies, RemoveBlobMusic, DirectlyWriteFile } from '@/utils/utils';
-import { GetImageFromURL, RewriteMetaToMp3, RewriteMetaToFlac, AudioMimeType, split_regex } from '@/decrypt/utils';
+import {
+  DownloadBlobMusic,
+  FilenamePolicy,
+  FilenamePolicies,
+  RemoveBlobMusic,
+  DirectlyWriteFile,
+} from '@/utils/utils';
+import {
+  GetImageFromURL,
+  RewriteMetaToMp3,
+  RewriteMetaToFlac,
+  AudioMimeType,
+  split_regex,
+} from '@/decrypt/utils';
 import { parseBlob as metaParseBlob } from 'music-metadata-browser';
 
 export default {
@@ -70,7 +114,14 @@ export default {
     return {
       showConfigDialog: false,
       showEditDialog: false,
-      editing_data: { picture: '', title: '', artist: '', album: '', albumartist: '', genre: '', },
+      editing_data: {
+        picture: '',
+        title: '',
+        artist: '',
+        album: '',
+        albumartist: '',
+        genre: '',
+      },
       tableData: [],
       playing_url: '',
       playing_auto: false,
@@ -92,7 +143,8 @@ export default {
         RemoveBlobMusic(data);
       } else {
         this.tableData.push(data);
-        this.$notify.success({
+        ElNotification({
+          type: 'success',
           title: '解锁成功',
           message: '成功解锁 ' + data.title,
           duration: 3000,
@@ -100,12 +152,18 @@ export default {
       }
       if (process.env.NODE_ENV === 'production') {
         let _rp_data = [data.title, data.artist, data.album];
-        window._paq.push(['trackEvent', 'Unlock', data.rawExt + ',' + data.mime, JSON.stringify(_rp_data)]);
+        window._paq.push([
+          'trackEvent',
+          'Unlock',
+          data.rawExt + ',' + data.mime,
+          JSON.stringify(_rp_data),
+        ]);
       }
     },
     showFail(errInfo, filename) {
       console.error(errInfo, filename);
-      this.$notify.error({
+      ElNotification({
+        type: 'error',
         title: '出现问题',
         message:
           errInfo +
@@ -156,7 +214,9 @@ export default {
       let writeSuccess = true;
       let notifyMsg = '成功修改 ' + this.editing_data.title;
       try {
-        const musicMeta = await metaParseBlob(new Blob([this.editing_data.blob], { type: mime }));
+        const musicMeta = await metaParseBlob(
+          new Blob([this.editing_data.blob], { type: mime })
+        );
         let imageInfo = undefined;
         if (this.editing_data.picture !== '') {
           imageInfo = await GetImageFromURL(this.editing_data.picture);
@@ -164,42 +224,56 @@ export default {
             console.warn('获取图像失败', this.editing_data.picture);
           }
         }
-        const newMeta = { picture: imageInfo?.buffer,
+        const newMeta = {
+          picture: imageInfo?.buffer,
           title: data.title,
           artists: data.artist.split(split_regex),
           album: data.album,
           albumartist: data.albumartist,
-          genre: data.genre.split(split_regex)
+          genre: data.genre.split(split_regex),
         };
         const buffer = Buffer.from(await this.editing_data.blob.arrayBuffer());
         const mime = AudioMimeType[this.editing_data.ext] || AudioMimeType.mp3;
         if (this.editing_data.ext === 'mp3') {
-          this.editing_data.blob = new Blob([RewriteMetaToMp3(buffer, newMeta, musicMeta)], { type: mime });
+          this.editing_data.blob = new Blob(
+            [RewriteMetaToMp3(buffer, newMeta, musicMeta)],
+            { type: mime }
+          );
         } else if (this.editing_data.ext === 'flac') {
-          this.editing_data.blob = new Blob([RewriteMetaToFlac(buffer, newMeta, musicMeta)], { type: mime });
+          this.editing_data.blob = new Blob(
+            [RewriteMetaToFlac(buffer, newMeta, musicMeta)],
+            { type: mime }
+          );
         } else {
           writeSuccess = undefined;
           notifyMsg = this.editing_data.ext + '类型文件暂时不支持修改音乐标签';
         }
       } catch (e) {
         writeSuccess = false;
-        notifyMsg = '修改' + this.editing_data.title + '未能完成。在写入新的元数据时发生错误：' + e;
+        notifyMsg =
+          '修改' +
+          this.editing_data.title +
+          '未能完成。在写入新的元数据时发生错误：' +
+          e;
       }
       this.editing_data.file = URL.createObjectURL(this.editing_data.blob);
       if (writeSuccess === true) {
-        this.$notify.success({
+        ElNotification({
+          type: 'success',
           title: '修改成功',
           message: notifyMsg,
           duration: 3000,
         });
       } else if (writeSuccess === false) {
-        this.$notify.error({
+        ElNotification({
+          type: 'error',
           title: '修改失败',
           message: notifyMsg,
           duration: 3000,
         });
       } else {
-        this.$notify.warning({
+        ElNotification({
+          type: 'warning',
           title: '修改取消',
           message: notifyMsg,
           duration: 3000,
@@ -217,7 +291,7 @@ export default {
     async saveFile(data) {
       if (this.dir) {
         await DirectlyWriteFile(data, this.filename_policy, this.dir);
-        this.$notify({
+        ElNotification({
           title: '保存成功',
           message: data.title,
           position: 'top-left',
@@ -231,12 +305,16 @@ export default {
     async showDirectlySave() {
       if (!window.showDirectoryPicker) return;
       try {
-        await this.$confirm('您的浏览器支持文件直接保存到磁盘，是否使用？', '新特性提示', {
-          confirmButtonText: '使用',
-          cancelButtonText: '不使用',
-          type: 'warning',
-          center: true,
-        });
+        await ElMessageBox.confirm(
+          '您的浏览器支持文件直接保存到磁盘，是否使用？',
+          '新特性提示',
+          {
+            confirmButtonText: '使用',
+            cancelButtonText: '不使用',
+            type: 'warning',
+            center: true,
+          }
+        );
       } catch (e) {
         console.log(e);
         return;

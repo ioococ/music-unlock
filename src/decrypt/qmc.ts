@@ -1,4 +1,9 @@
-import { QmcMapCipher, QmcRC4Cipher, QmcStaticCipher, QmcStreamCipher } from './qmc_cipher';
+import {
+  QmcMapCipher,
+  QmcRC4Cipher,
+  QmcStaticCipher,
+  QmcStreamCipher,
+} from './qmc_cipher';
 import { AudioMimeType, GetArrayBuffer, SniffAudioExt } from '@/decrypt/utils';
 
 import { DecryptResult } from '@/decrypt/entity';
@@ -37,7 +42,11 @@ export const HandlerMap: { [key: string]: Handler } = {
   '776176': { ext: 'wav', version: 1 },
 };
 
-export async function Decrypt(file: Blob, raw_filename: string, raw_ext: string): Promise<DecryptResult> {
+export async function Decrypt(
+  file: Blob,
+  raw_filename: string,
+  raw_ext: string
+): Promise<DecryptResult> {
   if (!(raw_ext in HandlerMap)) throw `Qmc cannot handle type: ${raw_ext}`;
   const handler = HandlerMap[raw_ext];
   let { version } = handler;
@@ -56,7 +65,10 @@ export async function Decrypt(file: Blob, raw_filename: string, raw_ext: string)
       musicID = v2Decrypted.songId;
       console.log('qmc wasm decoder suceeded');
     } else {
-      console.warn('QmcWasm failed with error %s', v2Decrypted.error || '(unknown error)');
+      console.warn(
+        'QmcWasm failed with error %s',
+        v2Decrypted.error || '(unknown error)'
+      );
     }
   }
 
@@ -75,7 +87,7 @@ export async function Decrypt(file: Blob, raw_filename: string, raw_ext: string)
     new Blob([musicDecoded], { type: mime }),
     raw_filename,
     ext,
-    musicID,
+    musicID
   );
 
   return {

@@ -2,7 +2,7 @@ import KgmCryptoModule from '@/KgmWasm/KgmWasmBundle';
 import { MergeUint8Array } from '@/utils/MergeUint8Array';
 
 // 每次处理 2M 的数据
-const DECRYPTION_BUF_SIZE = 2 *1024 * 1024;
+const DECRYPTION_BUF_SIZE = 2 * 1024 * 1024;
 
 export interface KGMDecryptionResult {
   success: boolean;
@@ -16,8 +16,15 @@ export interface KGMDecryptionResult {
  * 如果检测并解密成功，返回解密后的 Uint8Array 数据。
  * @param  {ArrayBuffer} kgmBlob 读入的文件 Blob
  */
-export async function DecryptKgmWasm(kgmBlob: ArrayBuffer, ext: string): Promise<KGMDecryptionResult> {
-  const result: KGMDecryptionResult = { success: false, data: new Uint8Array(), error: '' };
+export async function DecryptKgmWasm(
+  kgmBlob: ArrayBuffer,
+  ext: string
+): Promise<KGMDecryptionResult> {
+  const result: KGMDecryptionResult = {
+    success: false,
+    data: new Uint8Array(),
+    error: '',
+  };
 
   // 初始化模组
   let KgmCrypto: any;

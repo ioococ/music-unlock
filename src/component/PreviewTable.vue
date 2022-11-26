@@ -1,9 +1,11 @@
 <template>
   <el-table :data="tableData" style="width: 100%">
     <el-table-column label="封面">
-      <template slot-scope="scope">
+      <template #default="scope">
         <el-image :src="scope.row.picture" style="width: 100px; height: 100px">
-          <div slot="error" class="image-slot el-image__error">暂无封面</div>
+          <template #error class="image-slot el-image__error">
+            暂无封面
+          </template>
         </el-image>
       </template>
     </el-table-column>
@@ -24,11 +26,31 @@
     </el-table-column>
     <el-table-column label="操作">
       <template #default="scope">
-        <el-button circle icon="el-icon-video-play" type="success" @click="handlePlay(scope.$index, scope.row)">
+        <el-button
+          circle
+          type="success"
+          @click="handlePlay(scope.$index, scope.row)"
+        >
+          <el-icon size="20" style="vertical-align: middle">
+            <VideoPlay />
+          </el-icon>
         </el-button>
-        <el-button circle icon="el-icon-download" @click="handleDownload(scope.row)"></el-button>
-        <el-button circle icon="el-icon-edit" @click="handleEdit(scope.row)"></el-button>
-        <el-button circle icon="el-icon-delete" type="danger" @click="handleDelete(scope.$index, scope.row)">
+        <el-button circle @click="handleDownload(scope.row)">
+          <el-icon size="20" style="vertical-align: middle">
+            <Download />
+          </el-icon>
+        </el-button>
+        <el-button circle @click="handleEdit(scope.row)">
+          <el-icon size="20" style="vertical-align: middle"><Edit /></el-icon>
+        </el-button>
+        <el-button
+          circle
+          type="danger"
+          @click="handleDelete(scope.$index, scope.row)"
+        >
+          <el-icon size="20" style="vertical-align: middle">
+            <Delete />
+          </el-icon>
         </el-button>
       </template>
     </el-table-column>
