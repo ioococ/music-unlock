@@ -18,7 +18,8 @@ steps:
       - npm run test
       - ./scripts/build-and-package.sh legacy
       - ./scripts/build-and-package.sh extension
-      - ./scripts/build-and-package.sh modern
+      # FIXME: --modern is not a valid flag. Is this still required?
+      # - ./scripts/build-and-package.sh modern
 
   - name: upload artifact
     image: node:16.18-bullseye
