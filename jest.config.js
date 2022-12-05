@@ -4,4 +4,8 @@ module.exports = {
   moduleNameMapper: {
     '@/(.*)': '<rootDir>/src/$1',
   },
+  transform: {
+    '^.+\\.[jt]s$': 'babel-jest',
+    '^.+\\.vue$': '@vue/vue3-jest',
+  },
 };
