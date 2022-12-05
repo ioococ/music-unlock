@@ -1,5 +1,5 @@
 import { MergeUint8Array } from '@/utils/MergeUint8Array';
-import QmcCryptoModule from '@/QmcWasm/QmcWasmBundle';
+import * as QmcCryptoModule from '@/QmcWasm/QmcWasmBundle';
 
 // 每次处理 2M 的数据
 const DECRYPTION_BUF_SIZE = 2 * 1024 * 1024;

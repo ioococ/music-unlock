@@ -1,4 +1,4 @@
-import KgmCryptoModule from '@/KgmWasm/KgmWasmBundle';
+import * as KgmCryptoModule from '@/KgmWasm/KgmWasmBundle';
 import { MergeUint8Array } from '@/utils/MergeUint8Array';
 
 // 每次处理 2M 的数据

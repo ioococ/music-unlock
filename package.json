@@ -13,7 +13,9 @@
   "scripts": {
     "postinstall": "patch-package",
     "serve": "vite",
+    "start": "vite",
     "build": "vite build",
+    "build:wasm": "bash ./scripts/build-wasm.sh",
     "test": "jest",
     "pretty": "prettier --write src/{**/*,*}.{js,ts,jsx,tsx,vue}",
     "pretty:check": "prettier --check src/{**/*,*}.{js,ts,jsx,tsx,vue}",
@@ -43,6 +45,7 @@
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
+    "@rollup/plugin-replace": "^5.0.1",
     "@types/crypto-js": "^4.0.2",
     "@types/jest": "^27.0.3",
     "@vitejs/plugin-vue": "^3.2.0",
@@ -62,6 +65,8 @@
     "unplugin-vue-components": "^0.22.11",
     "util": "^0.12.5",
     "vite": "^3.2.4",
-    "vite-plugin-commonjs": "^0.5.3"
+    "vite-plugin-commonjs": "^0.5.3",
+    "vite-plugin-pwa": "^0.13.3",
+    "vite-plugin-static-copy": "^0.12.0"
   }
 }
