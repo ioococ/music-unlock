@@ -9,6 +9,7 @@ import { Decrypt as KwmDecrypt } from '@/decrypt/kwm';
 import { Decrypt as RawDecrypt } from '@/decrypt/raw';
 import { Decrypt as TmDecrypt } from '@/decrypt/tm';
 import { Decrypt as JooxDecrypt } from '@/decrypt/joox';
+import { Decrypt as XimalayaDecrypt } from './ximalaya';
 import { DecryptResult, FileInfo } from '@/decrypt/entity';
 import { SplitFilename } from '@/decrypt/utils';
 import { storage } from '@/utils/storage';
@@ -49,9 +50,12 @@ export async function Decrypt(file: FileInfo, config: Record<string, any>): Prom
     case 'tm3': // QQ Music IOS Mp3
       rt_data = await RawDecrypt(file.raw, raw.name, 'mp3');
       break;
+    case 'qmc0': //QQ Music Android Mp3
     case 'qmc3': //QQ Music Android Mp3
     case 'qmc2': //QQ Music Android Ogg
-    case 'qmc0': //QQ Music Android Mp3
+    case 'qmc4': //QQ Music Android Ogg
+    case 'qmc6': //QQ Music Android Ogg
+    case 'qmc8': //QQ Music Android Ogg
     case 'qmcflac': //QQ Music Android Flac
     case 'qmcogg': //QQ Music Android Ogg
     case 'tkm': //QQ Music Accompaniment M4a
@@ -67,6 +71,7 @@ export async function Decrypt(file: FileInfo, config: Record<string, any>): Prom
     case 'mggl': //QQ Music Mac
     case 'mflac': //QQ Music New Flac
     case 'mflac0': //QQ Music New Flac
+    case 'mflach': //QQ Music New Flac
     case 'mgg': //QQ Music New Ogg
     case 'mgg1': //QQ Music New Ogg
     case 'mgg0':
@@ -93,6 +98,12 @@ export async function Decrypt(file: FileInfo, config: Record<string, any>): Prom
     case 'ofl_en':
       rt_data = await JooxDecrypt(file.raw, raw.name, raw.ext);
       break;
+    case 'x2m':
+    case 'x3m':
+      rt_data = await XimalayaDecrypt(file.raw, raw.name, raw.ext);
+      break;
+    case 'mflach': //QQ Music New Flac
+      throw '网页版无法解锁，请使用<a target="_blank" href="https://git.unlock-music.dev/um/cli">CLI版本</a>'
     default:
       throw '不支持此文件格式';
   }
