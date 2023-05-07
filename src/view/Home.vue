@@ -3,13 +3,13 @@
     <file-selector @error="showFail" @success="showSuccess" />
 
     <div id="app-control">
-      <el-row class="mb-3">
+      <el-row class="mb-3" justify="center" align="middle">
         <span>歌曲命名格式：</span>
         <el-radio v-for="k in FilenamePolicies" :key="k.key" v-model="filename_policy" :label="k.key">
           {{ k.text }}
         </el-radio>
       </el-row>
-      <el-row>
+      <el-row justify="center" align="middle">
         <edit-dialog
           :show="showEditDialog"
           :picture="editing_data.picture"
