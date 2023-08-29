@@ -21,7 +21,7 @@ const KgmHeader = [
   0xA8, 0xAF, 0xA6, 0x8E, 0x0F, 0xFF, 0x99, 0x14
 ]
 
-export async function Decrypt(file: File, raw_filename: string, raw_ext: string): Promise<DecryptResult> {
+export async function Decrypt(file: Blob, raw_filename: string, raw_ext: string): Promise<DecryptResult> {
   const oriData = await GetArrayBuffer(file);
   if (raw_ext === 'vpr') {
     if (!BytesHasPrefix(new Uint8Array(oriData), VprHeader)) throw Error('Not a valid vpr file!');

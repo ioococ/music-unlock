@@ -26,7 +26,7 @@ const CORE_KEY = EncHex.parse('687a4852416d736f356b496e62617857');
 const META_KEY = EncHex.parse('2331346C6A6B5F215C5D2630553C2728');
 const MagicHeader = [0x43, 0x54, 0x45, 0x4e, 0x46, 0x44, 0x41, 0x4d];
 
-export async function Decrypt(file: File, raw_filename: string, _: string): Promise<DecryptResult> {
+export async function Decrypt(file: Blob, raw_filename: string, _: string): Promise<DecryptResult> {
   return new NcmDecrypt(await GetArrayBuffer(file), raw_filename).decrypt();
 }
 

@@ -25,7 +25,7 @@ function decryptSegment(data: Uint8Array, key: Uint8Array) {
     return Buffer.from(data);
 }
 
-export async function Decrypt(file: File, raw_filename: string): Promise<DecryptResult> {
+export async function Decrypt(file: Blob, raw_filename: string): Promise<DecryptResult> {
   const buf = new Uint8Array(await GetArrayBuffer(file));
 
   // 咪咕编码的 WAV 文件有很多“空洞”内容，尝试密钥。

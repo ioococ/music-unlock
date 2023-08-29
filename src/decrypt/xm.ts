@@ -13,7 +13,7 @@ const FileTypeMap: { [key: string]: string } = {
   ' A4M': '.m4a',
 };
 
-export async function Decrypt(file: File, raw_filename: string, raw_ext: string): Promise<DecryptResult> {
+export async function Decrypt(file: Blob, raw_filename: string, raw_ext: string): Promise<DecryptResult> {
   const oriData = new Uint8Array(await GetArrayBuffer(file));
   if (!BytesHasPrefix(oriData, MagicHeader) || !BytesHasPrefix(oriData.slice(8, 12), MagicHeader2)) {
     if (raw_ext === 'xm') {

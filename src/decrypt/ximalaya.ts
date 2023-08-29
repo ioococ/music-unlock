@@ -7,7 +7,7 @@ const HandlerMap: Map<string, (data: Uint8Array) => Uint8Array> = new Map([
   ['x3m', ProcessX3M],
 ]);
 
-export async function Decrypt(file: File, raw_filename: string, raw_ext: string): Promise<DecryptResult> {
+export async function Decrypt(file: Blob, raw_filename: string, raw_ext: string): Promise<DecryptResult> {
   const buffer = new Uint8Array(await GetArrayBuffer(file));
   const handler = HandlerMap.get(raw_ext);
   if (!handler) throw 'File type is incorrect!';

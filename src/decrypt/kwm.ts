@@ -22,7 +22,7 @@ const MagicHeader2 = [
 ];
 const PreDefinedKey = 'MoOtOiTvINGwd2E6n0E1i7L5t2IoOoNk';
 
-export async function Decrypt(file: File, raw_filename: string, _: string): Promise<DecryptResult> {
+export async function Decrypt(file: Blob, raw_filename: string, _: string): Promise<DecryptResult> {
   const oriData = new Uint8Array(await GetArrayBuffer(file));
     if (!BytesHasPrefix(oriData, MagicHeader) && !BytesHasPrefix(oriData, MagicHeader2)) {
     if (SniffAudioExt(oriData) === 'aac') {
