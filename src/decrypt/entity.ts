@@ -1,7 +1,7 @@
 export interface DecryptResult {
   title: string;
   album?: string;
-  artist?: string;
+  artist?: string[];
 
   mime: string;
   ext: string;

@@ -217,10 +217,13 @@ export default {
     },
 
     async editFile(data) {
-      this.editing_data = data;
-      const musicMeta = await metaParseBlob(this.editing_data.blob);
+      this.editing_data.picture = data.picture;
+      this.editing_data.title = data.title
+      this.editing_data.artist = data.artist.join()
+      this.editing_data.album = data.album
+      const musicMeta = await metaParseBlob(data.blob);
       this.editing_data.albumartist = musicMeta.common.albumartist || '';
-      this.editing_data.genre = musicMeta.common.genre?.toString() || '';
+      this.editing_data.genre = musicMeta.common.genre?.join() || '';
       this.showEditDialog = true;
     },
     async saveFile(data) {

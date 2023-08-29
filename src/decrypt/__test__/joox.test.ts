@@ -21,7 +21,7 @@ describe('decrypt/joox', () => {
         title: 'unused',
         album: 'unused',
         blob: blob,
-        artist: 'unused',
+        artist: ['unused'],
         imgUrl: 'https://example.unlock-music.dev/',
       };
     });

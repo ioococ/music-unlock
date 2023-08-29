@@ -14,7 +14,7 @@
     </el-table-column>
     <el-table-column label="歌手">
       <template #default="scope">
-        <p>{{ scope.row.artist }}</p>
+        <p>{{ scope.row.artist.join('/') }}</p>
       </template>
     </el-table-column>
     <el-table-column label="专辑">

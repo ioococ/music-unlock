@@ -175,7 +175,6 @@ class NcmDecrypt {
 
     if (artists.length === 0 && info.artist) {
       artists = info.artist
-        .split(',')
         .map((val) => val.trim())
         .filter((val) => val != '');
     }
@@ -219,7 +218,7 @@ class NcmDecrypt {
     if (!this.newMeta || !this.blob) throw Error('bad sequence');
     return {
       title: this.newMeta.title,
-      artist: this.newMeta.artists?.join('; '),
+      artist: this.newMeta.artists,
       ext: this.format,
       album: this.newMeta.album,
       picture: this.image?.url,

@@ -14,7 +14,7 @@ import { getQMImageURLFromPMID, queryAlbumCover, querySongInfoById } from '@/uti
 
 interface MetaResult {
   title: string;
-  artist: string;
+  artist: string[];
   album: string;
   imgUrl: string;
   blob: Blob;
@@ -44,6 +44,7 @@ export async function extractQQMusicMeta(
       musicMeta.common.artist = '';
       if (!musicMeta.common.artists) {
         musicMeta.common.artist = fromGBK(musicMeta.common.artist);
+        musicMeta.common.artists = [musicMeta.common.artist];
       }
       else {
         musicMeta.common.artist = musicMeta.common.artists.map(fromGBK).join();
@@ -61,8 +62,8 @@ export async function extractQQMusicMeta(
     }
   }
 
-  const info = GetMetaFromFile(name, musicMeta.common.title, musicMeta.common.artist);
-  info.artist = info.artist || '';
+  const info = GetMetaFromFile(name, musicMeta.common.title, musicMeta.common.artists);
+  info.artist = info.artist || [''];
 
   let imageURL = GetCoverFromFile(musicMeta);
   if (!imageURL) {
@@ -76,7 +77,7 @@ export async function extractQQMusicMeta(
     imgUrl: imageURL,
     blob: await writeMetaToAudioFile({
       title: info.title,
-      artists: info.artist.split(split_regex),
+      artists: info.artist,
       ext,
       imageURL,
       musicMeta,
@@ -97,7 +98,7 @@ async function fetchMetadataFromSongId(
 
   return {
     title: info.track_info.title,
-    artist: artists.join(','),
+    artist: artists,
     album: info.track_info.album.name,
     imgUrl: imageURL,
 
@@ -112,9 +113,9 @@ async function fetchMetadataFromSongId(
   };
 }
 
-async function getCoverImage(title: string, artist?: string, album?: string): Promise<string> {
+async function getCoverImage(title: string, artist?: string[], album?: string): Promise<string> {
   try {
-    const data = await queryAlbumCover(title, artist, album);
+    const data = await queryAlbumCover(title, artist?.join(), album);
     return getQMImageURLFromPMID(data.Id, data.Type);
   } catch (e) {
     console.warn(e);

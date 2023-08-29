@@ -80,13 +80,13 @@ export function GetCoverFromFile(metadata: IAudioMetadata): string {
 
 export interface IMusicMetaBasic {
   title: string;
-  artist?: string;
+  artist?: string[];
 }
 
 export function GetMetaFromFile(
   filename: string,
   exist_title?: string,
-  exist_artist?: string,
+  exist_artist?: string[],
   separator = '-',
 ): IMusicMetaBasic {
   const meta: IMusicMetaBasic = { title: exist_title ?? '', artist: exist_artist };
@@ -94,7 +94,7 @@ export function GetMetaFromFile(
   const items = filename.split(separator);
   if (items.length > 1) {
     //由文件名和原metadata共同决定歌手tag(有时从文件名看有多个歌手，而metadata只有一个)
-    if (!meta.artist || meta.artist.split(split_regex).length < items[0].trim().split(split_regex).length) meta.artist = items[0].trim();
+    if (!meta.artist || meta.artist.length < items[0].trim().split(split_regex).length) meta.artist = items[0].trim().split(split_regex);
     if (!meta.title) meta.title = items[1].trim();
   } else if (items.length === 1) {
     if (!meta.title) meta.title = items[0].trim();

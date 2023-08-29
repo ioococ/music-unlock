@@ -43,7 +43,7 @@ export async function Decrypt(file: File, raw_filename: string, raw_ext: string)
   const mime = AudioMimeType[ext];
   let musicBlob = new Blob([musicDecoded], { type: mime });
   const musicMeta = await metaParseBlob(musicBlob);
-  const { title, artist } = GetMetaFromFile(raw_filename, musicMeta.common.title, String(musicMeta.common.artists || musicMeta.common.artist || ""));
+  const { title, artist } = GetMetaFromFile(raw_filename, musicMeta.common.title, musicMeta.common.artists || [musicMeta.common.artist || ""]);
   return {
     album: musicMeta.common.album,
     picture: GetCoverFromFile(musicMeta),

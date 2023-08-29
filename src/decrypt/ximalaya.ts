@@ -20,7 +20,7 @@ export async function Decrypt(file: File, raw_filename: string, raw_ext: string)
 
   const musicMeta = await metaParseBlob(musicBlob);
 
-  const info = GetMetaFromFile(raw_filename, musicMeta.common.title, musicMeta.common.artist);
+  const info = GetMetaFromFile(raw_filename, musicMeta.common.title, musicMeta.common.artists || [musicMeta.common.artist || '']);
 
   return {
     picture: '',
