@@ -14,10 +14,10 @@
           :show="showEditDialog"
           :picture="editing_data.picture"
           :title="editing_data.title"
-          :artist="editing_data.artist"
+          :artist="joinedArtist"
           :album="editing_data.album"
           :albumartist="editing_data.albumartist"
-          :genre="editing_data.genre"
+          :genre="joinedGenre"
           @cancel="showEditDialog = false"
           @ok="handleEdit"
         ></edit-dialog>
@@ -78,7 +78,19 @@ export default {
     return {
       showConfigDialog: false,
       showEditDialog: false,
-      editing_data: { picture: '', title: '', artist: '', album: '', albumartist: '', genre: '' },
+      editing_data: {
+        picture: '',
+        title: '',
+        artist: [''],
+        album: '',
+        albumartist: '',
+        genre: [''],
+        ext: '',
+        blob: Blob,
+        index: 0
+      },
+      joinedArtist: "",
+      joinedGenre: "",
       tableData: [],
       playing_url: '',
       playing_auto: false,
@@ -160,7 +172,11 @@ export default {
       }
       this.editing_data.title = data.title;
       this.editing_data.artist = data.artist;
+      this.joinedArtist = data.artist.join();
       this.editing_data.album = data.album;
+      this.editing_data.albumartist = data.albumartist;
+      this.editing_data.genre = data.genre;
+      this.joinedGenre = data.genre.join();
       let writeSuccess = true;
       let notifyMsg = '成功修改 ' + this.editing_data.title;
       try {
@@ -175,10 +191,10 @@ export default {
         const newMeta = {
           picture: imageInfo?.buffer,
           title: data.title,
-          artists: data.artist.split(split_regex),
+          artists: data.artist,
           album: data.album,
           albumartist: data.albumartist,
-          genre: data.genre.split(split_regex),
+          genre: data.genre,
         };
         const buffer = Buffer.from(await this.editing_data.blob.arrayBuffer());
         const mime = AudioMimeType[this.editing_data.ext] || AudioMimeType.mp3;
@@ -195,6 +211,9 @@ export default {
         notifyMsg = '修改' + this.editing_data.title + '未能完成。在写入新的元数据时发生错误：' + e;
       }
       this.editing_data.file = URL.createObjectURL(this.editing_data.blob);
+      let dataIndex = this.editing_data.index;
+      delete this.editing_data.index;
+      this.tableData.splice(dataIndex, 1, this.editing_data)
       if (writeSuccess === true) {
         this.$notify.success({
           title: '修改成功',
@@ -216,14 +235,14 @@ export default {
       }
     },
 
-    async editFile(data) {
-      this.editing_data.picture = data.picture;
-      this.editing_data.title = data.title
-      this.editing_data.artist = data.artist.join()
-      this.editing_data.album = data.album
+    async editFile(index, data) {
+      this.editing_data = data;
       const musicMeta = await metaParseBlob(data.blob);
       this.editing_data.albumartist = musicMeta.common.albumartist || '';
-      this.editing_data.genre = musicMeta.common.genre?.join() || '';
+      this.editing_data.genre = musicMeta.common.genre || [''];
+      this.joinedArtist = this.editing_data.artist.join();
+      this.joinedGenre = this.editing_data.genre.join();
+      this.editing_data.index = index;
       this.showEditDialog = true;
     },
     async saveFile(data) {

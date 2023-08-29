@@ -92,6 +92,7 @@ form >>> input {
 </template>
 
 <script>
+import { split_regex } from '@/decrypt/utils';
 import Ruby from './Ruby';
 
 export default {
@@ -167,10 +168,10 @@ export default {
       this.$emit('ok', {
         picture: this.imgFile.blob,
         title: this.title,
-        artist: this.artist,
+        artist: this.artist.split(split_regex),
         album: this.album,
         albumartist: this.albumartist,
-        genre: this.genre,
+        genre: this.genre.split(split_regex),
       });
     },
   },
