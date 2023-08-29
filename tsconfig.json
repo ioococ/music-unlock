@@ -28,7 +28,8 @@
       "dom.iterable",
       "scripthost"
     ],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "outDir": "build"
   },
   "include": [
     "src/**/*.ts",
@@ -38,6 +39,7 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "build/**/*"
   ]
 }
