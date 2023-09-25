@@ -18,7 +18,9 @@
           :album="editing_data.album"
           :albumartist="editing_data.albumartist"
           :genre="editing_data.genre"
-          @cancel="showEditDialog = false" @ok="handleEdit"></edit-dialog>
+          @cancel="showEditDialog = false"
+          @ok="handleEdit"
+        ></edit-dialog>
         <config-dialog :show="showConfigDialog" @done="showConfigDialog = false"></config-dialog>
         <el-tooltip class="item" effect="dark" placement="top">
           <div slot="content">
@@ -37,7 +39,7 @@
               开启后，解锁结果将不会存留于浏览器中，防止内存不足。
             </span>
           </div>
-            <el-checkbox v-model="instant_save" type="success" border class="ml-2">立即保存</el-checkbox>
+          <el-checkbox v-model="instant_save" type="success" border class="ml-2">立即保存</el-checkbox>
         </el-tooltip>
       </el-row>
     </div>
@@ -50,7 +52,8 @@
       :table-data="tableData"
       @download="saveFile"
       @edit="editFile"
-      @play="changePlaying" />
+      @play="changePlaying"
+    />
   </div>
 </template>
 
