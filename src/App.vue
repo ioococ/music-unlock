@@ -46,8 +46,6 @@ export default {
   created() {
     this.$nextTick(() => {
       this.finishLoad()
-      window.onresize = () => {
-      }
     });
   },
   methods: {
