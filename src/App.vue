@@ -1,5 +1,5 @@
 <template>
-  <el-container id="app" :style="`min-height: ${heightMinContainer}px`">
+  <el-container id="app">
     <el-main class="p-0">
       <Home />
     </el-main>
@@ -41,15 +41,12 @@ export default {
   data() {
     return {
       version: config.version,
-      heightMinContainer: 800
     };
   },
   created() {
     this.$nextTick(() => {
-      this.heightMinContainer = innerHeight
       this.finishLoad()
       window.onresize = () => {
-        this.heightMinContainer = innerHeight
       }
     });
   },
