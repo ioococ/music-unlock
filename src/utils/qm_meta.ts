@@ -55,7 +55,7 @@ export async function extractQQMusicMeta(
 
   if (id && id !== '0') {
     try {
-      return fetchMetadataFromSongId(id, ext, musicMeta, musicBlob);
+      return await fetchMetadataFromSongId(id, ext, musicMeta, musicBlob);
     } catch (e) {
       console.warn('在线获取曲目信息失败，回退到本地 meta 提取', e);
     }
